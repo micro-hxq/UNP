@@ -40,6 +40,12 @@ int Accept(int fd, struct sockaddr* sa, socklen_t* salenptr)
     return sockfd;
 }
 
+void Close(int fd)
+{
+    if(close(fd) == -1)
+        err_sys("close error");
+}
+
 void Getsockname(int sockfd, struct sockaddr* sa, socklen_t* salenptr)
 {
     if(getsockname(sockfd, sa, salenptr) < 0)
@@ -89,7 +95,30 @@ void Inet_pton(int family, const char* src, void* dst)
         err_sys("inet_pton error for %s, invalid address family", src);
     else if(n == 0)
         err_quit("inet_pton error for %s, invalid address", src);
-    return ;
 }
 
+/**
+ *  unix c function wrapper
+ */
 
+void* Calloc(size_t n, size_t size)
+{
+    void *ptr;
+    if((ptr = calloc(n, size)) == NULL)
+        err_sys("calloc error");
+    return ptr;
+}
+
+ssize_t Read(int fd, void *ptr, size_t nbytes)
+{
+    int n;
+    if((n = read(fd, ptr, nbytes)) == -1)
+        err_sys("read error");
+    return n;
+}
+
+void Write(int fd, void *ptr, size_t nbytes)
+{
+    if(write(fd, ptr, nbytes) != nbytes)
+        err_sys("write error");
+}

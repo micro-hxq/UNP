@@ -12,29 +12,17 @@ int main(int argc, char const *argv[])
         exit(1);
     }
 
-    if((sockfd = socket(AF_INET,SOCK_STREAM,0)) < 0)
-    {
-        printf("socket error\n");
-        exit(1);
+    sockfd = Socket(AF_INET,SOCK_STREAM,0);
 
-    }
     bzero(&servaddr,sizeof(servaddr));
     servaddr.sin_family = AF_INET;
-    servaddr.sin_port   = htons(13);
+    servaddr.sin_port   = htons(9999);
 
-    if(inet_pton(AF_INET,argv[1],&servaddr.sin_addr) <= 0)
-    {
-        printf("inet_pton error: %s\n", argv[1]);
-        exit(1);
-    }
+    Inet_pton(AF_INET,argv[1],&servaddr.sin_addr);
 
-    if(connect(sockfd,(SA*)&servaddr,sizeof(servaddr)) < 0)
-    {
-        printf("connect error\n");
-        exit(1);
-    }
+    Connect(sockfd,(SA*)&servaddr,sizeof(servaddr));
 
-    while((n = read(sockfd, recvline, MAXLINE)) > 0)
+    while((n = Read(sockfd, recvline, MAXLINE)) > 0)
     {
         recvline[n] = 0;
         if(fputs(recvline, stdout) == EOF)
@@ -51,5 +39,5 @@ int main(int argc, char const *argv[])
     }
 
     exit(0);
-}   
+}
 

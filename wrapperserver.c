@@ -24,6 +24,7 @@ int main(int argc, char const *argv[])
         connfd = Accept(listenfd, (SA*) &clientaddr, &len);
         Inet_ntop(AF_INET, (SA*) &clientaddr, clientinfo, MAXLINE);
         printf("connecting from: %s", clientinfo);
+        fflush(NULL);
         while((n = read(connfd, recvline, sizeof(recvline))) != 0)
         {
 
@@ -35,6 +36,7 @@ int main(int argc, char const *argv[])
             write(connfd, recvline, n);
         }
         printf("\nclose connection.\n");
+        fflush(NULL);
         close(connfd);
     }
     return 0;
