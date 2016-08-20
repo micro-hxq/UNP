@@ -74,7 +74,7 @@ void Getsockopt(int sockfd, int level, int optname,
 
 void Shutdown(int fd, int how)
 {
-    if(shutdown(fd, how) < 0)
+    if(shutdown(fd, how) == -1)
         err_sys("shutdown error");
 }
 
@@ -109,6 +109,14 @@ void* Calloc(size_t n, size_t size)
     return ptr;
 }
 
+pid_t Fork()
+{
+    pid_t pid;
+    if((pid = fork()) == -1)
+        err_sys("fork error");
+    return pid;
+}
+
 ssize_t Read(int fd, void *ptr, size_t nbytes)
 {
     int n;
@@ -121,4 +129,30 @@ void Write(int fd, void *ptr, size_t nbytes)
 {
     if(write(fd, ptr, nbytes) != nbytes)
         err_sys("write error");
+}
+
+int Select(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds,
+           struct timeval *timeout)
+{
+    int n;
+    if((n == select(nfds, readfds, writefds, exceptfds, timeout)) == -1)
+        err_sys("select error");
+    return n;
+}
+
+int Pselect(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds,
+        const struct timespec *timeout, const sigset_t *sigmask)
+{
+    int n;
+    if((n = pselect(nfds, readfds, writefds, exceptfds, timeout, sigmask)) == -1)
+        err_sys("pselect error");
+    return n;
+}
+
+int Poll(struct pollfd *fds, nfds_t nfds, int timeout)
+{
+    int n;
+    if((n = poll(fds, nfds, timeout)) == -1)
+        err_sys("poll error");
+    return n;
 }

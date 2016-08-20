@@ -514,4 +514,9 @@ void     err_quit(const char *, ...);
 void     err_ret(const char *, ...);
 void     err_sys(const char *, ...);
 
+/**
+ *  my function declearation
+ */
+int Pselect(int, fd_set*, fd_set*, fd_set*, const struct timespec*, const sigset_t*);
+int Poll(struct pollfd*, nfds_t, int);
 #endif  /* __unp_h */
