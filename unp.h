@@ -499,7 +499,7 @@ ssize_t  Recvfrom(int, void *, size_t, int, SA *, socklen_t *);
 ssize_t  Recvmsg(int, struct msghdr *, int);
 int      Select(int, fd_set *, fd_set *, fd_set *, struct timeval *);
 void     Send(int, const void *, size_t, int);
-void     Sendto(int, const void *, size_t, int, const SA *, socklen_t);
+ssize_t     Sendto(int, const void *, size_t, int, const SA *, socklen_t);
 void     Sendmsg(int, const struct msghdr *, int);
 void     Setsockopt(int, int, int, const void *, socklen_t);
 void     Shutdown(int, int);
