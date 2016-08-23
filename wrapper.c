@@ -109,6 +109,14 @@ void* Calloc(size_t n, size_t size)
     return ptr;
 }
 
+void* Malloc(size_t size)
+{
+    void *ptr;
+    if((ptr = malloc(size)) == NULL)
+        err_sys("malloc error");
+    return ptr;
+}
+
 pid_t Fork()
 {
     pid_t pid;
@@ -154,5 +162,23 @@ int Poll(struct pollfd *fds, nfds_t nfds, int timeout)
     int n;
     if((n = poll(fds, nfds, timeout)) == -1)
         err_sys("poll error");
+    return n;
+}
+
+ssize_t Recvfrom(int sockfd, void *buf, size_t len, int flags,
+                struct sockaddr *src_addr, socklen_t *addrlen)
+{
+    ssize_t n;
+    if((n = recvfrom(sockfd, buf, len, flags, src_addr, addrlen)) == -1)
+        err_sys("recvfrom error");
+    return n;
+}
+
+ssize_t Sendto(int sockfd, const void *buf, size_t len, int flags,
+              const struct sockaddr *dest_addr, socklen_t addrlen)
+{
+    ssize_t n;
+    if((n = sendto(sockfd, buf, len, flags, dest_addr, addrlen)) == -1)
+        err_sys("sendto error");
     return n;
 }
