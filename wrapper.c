@@ -61,14 +61,14 @@ void Getpeername(int sockfd, struct sockaddr* sa, socklen_t* salenptr)
 void Setsockopt(int sockfd, int level, int optname,
                 const void* optval, socklen_t optlen)
 {
-    if(setsockopt(sockfd, level, optname, optval, optlen) < 0)
+    if(setsockopt(sockfd, level, optname, optval, optlen) == -1)
         err_sys("setsockopt error");
 }
 
 void Getsockopt(int sockfd, int level, int optname,
                 void* optval, socklen_t* optlen)
 {
-    if(getsockopt(sockfd, level, optname, optval, optlen) < 0)
+    if(getsockopt(sockfd, level, optname, optval, optlen) == -1)
         err_sys("getsockopt error");
 }
 

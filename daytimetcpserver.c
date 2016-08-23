@@ -21,7 +21,7 @@ int main(int argc, char const *argv[])
         exit(1);
     }
 
-    if(listen(listenfd,LISTENQ) < 0)
+    if(listen(listenfd, LISTENQ) < 0)
     {
         printf("listen error\n");
         exit(1);

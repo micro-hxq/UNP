@@ -35,6 +35,12 @@ static void tcp_cli(FILE* fp, const char* ipstr)
 
     str_client(fp, sockfd);
 
+    //  finish with reset
+    struct linger lin;
+    lin.l_onoff = 1;
+    lin.l_linger = 0;
+    Setsockopt(sockfd, SOL_SOCKET, SO_LINGER, &lin, sizeof lin);
+
     Close(sockfd);
 }
 
