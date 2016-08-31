@@ -3,6 +3,8 @@
 #include <stdarg.h>
 #include <syslog.h>
 
+int     daemon_proc;
+
 static void err_doit(int ,int, const char*, va_list);
 
 void err_ret(const char* msg, ...)
@@ -63,9 +65,16 @@ static void err_doit(int errnoflag, int level, const char* msg, va_list ap)
     if(errnoflag)
         snprintf(buff + n, MAXLINE - n, ": %s", strerror(errno_save));
     strcat(buff, "\n");
-    fflush(stdout);
-    fputs(buff, stderr);
-    fflush(stderr);
+    if(daemon_proc)
+    {
+        syslog(level, "%s", buff);
+    }
+    else
+    {
+        fflush(stdout);
+        fputs(buff, stderr);
+        fflush(stderr);
+    }
 
     return ;
 }

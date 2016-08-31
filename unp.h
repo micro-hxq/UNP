@@ -519,4 +519,5 @@ void     err_sys(const char *, ...);
  */
 int Pselect(int, fd_set*, fd_set*, fd_set*, const struct timespec*, const sigset_t*);
 int Poll(struct pollfd*, nfds_t, int);
+int udp_unconnect(const char*, const char*, SA**, socklen_t*);
 #endif  /* __unp_h */
